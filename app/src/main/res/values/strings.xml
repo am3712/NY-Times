@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">NY Times</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="most_popular">Most Popular</string>
+    <string name="popular_title">NY Times Most Popular</string>
+    <string name="article_item">Article item</string>
+    <string name="article_image_preview">Article Image preview</string>
+    <string name="article_image_cover">Article Image Cover</string>
+</resources>
