@@ -1,5 +1,7 @@
 package com.example.nytimes.ui.details
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,12 +30,25 @@ class DetailsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.article = args.article
+        binding.viewModel = viewModel
+        if (viewModel.article.value == null) {
+            viewModel.setArticle(args.article)
+        }
+
+        binding.button.setOnClickListener { openWebPage(viewModel.article.value?.url!!) }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun openWebPage(url: String) {
+        val webpage: Uri = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, webpage)
+        if (intent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivity(intent)
+        }
     }
 
 

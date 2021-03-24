@@ -52,6 +52,7 @@ class PopularViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 _error.value = "No Internet Connection"
+                Timber.i(e)
                 Timber.i(e.localizedMessage)
             } finally {
                 _loading.value = false

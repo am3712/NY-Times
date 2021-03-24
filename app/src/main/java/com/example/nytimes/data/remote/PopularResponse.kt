@@ -65,11 +65,10 @@ data class Article(
     val section: String,
     val byline: String,
     val title: String,
-    val caption: String,
+    val caption: String?,
     val abstract: String,
-    val thumbnailUrl: String,
-    val coverUrl: String,
-    val coverHeight: Int,
+    val thumbnailUrl: String?,
+    val coverUrl: String?,
     val type: String,
 ) : Parcelable
 
@@ -81,6 +80,7 @@ fun PopularResponse.asDomainModel(): List<Article> {
 
     Timber.i("size : ${results.size}")
     return results.map { result: Result ->
+        val media = result.media.getOrNull(0);
         Article(
             id = result.id,
             source = result.source,
@@ -89,13 +89,12 @@ fun PopularResponse.asDomainModel(): List<Article> {
             section = result.section,
             byline = result.byline,
             abstract = result.abstract,
-            thumbnailUrl = result.media[0].mediaMetadata[0].url,
-            coverUrl = result.media[0].mediaMetadata[2].url,
-            coverHeight = result.media[0].mediaMetadata[2].height,
+            thumbnailUrl = media?.mediaMetadata?.getOrNull(0)?.url,
+            coverUrl = media?.mediaMetadata?.getOrNull(2)?.url,
             title = result.title,
             url = result.url,
             type = result.type,
-            caption = result.media[0].caption
+            caption = media?.caption
         )
     }
 }

@@ -22,5 +22,11 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
+        app:itemIconTint="@color/purple_500"
+        app:itemShapeFillColor="@color/teal_700"
+        app:itemTextColor="@color/purple_500"
+        android:background="@color/purple_500"
+        app:itemShapeInsetStart="4dp"
+        app:itemShapeInsetEnd="4dp"
         app:menu="@menu/activity_main_drawer" />
 </androidx.drawerlayout.widget.DrawerLayout>
