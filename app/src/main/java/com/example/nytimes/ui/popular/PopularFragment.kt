@@ -6,18 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.nytimes.data.remote.Article
 import com.example.nytimes.databinding.PopularFragmentBinding
 import com.google.android.material.snackbar.Snackbar
-import timber.log.Timber
 
 class PopularFragment : Fragment() {
     private val viewModel: PopularViewModel by viewModels()
 
     private var _binding: PopularFragmentBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -29,7 +26,11 @@ class PopularFragment : Fragment() {
         //set adapter
         binding.articlesList.adapter = ArticleAdapter(object : ArticleListener {
             override fun onClick(article: Article) {
-                Timber.i("Item clicked")
+                findNavController().navigate(
+                    PopularFragmentDirections.actionNavPopularToDetailsFragment(
+                        article
+                    )
+                )
             }
         })
 
@@ -52,6 +53,11 @@ class PopularFragment : Fragment() {
                 viewModel.clearErrorStatus();
             }
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

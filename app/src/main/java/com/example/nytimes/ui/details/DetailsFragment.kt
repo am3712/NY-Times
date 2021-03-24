@@ -1,32 +1,40 @@
 package com.example.nytimes.ui.details
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.nytimes.R
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
+import com.example.nytimes.databinding.DetailsFragmentBinding
 
 class DetailsFragment : Fragment() {
+    private val args: DetailsFragmentArgs by navArgs()
 
-    companion object {
-        fun newInstance() = DetailsFragment()
-    }
+    private val viewModel: DetailsViewModel by viewModels()
 
-    private lateinit var viewModel: DetailsViewModel
+    private var _binding: DetailsFragmentBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.details_fragment, container, false)
+    ): View {
+        _binding = DetailsFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(DetailsViewModel::class.java)
-        // TODO: Use the ViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.article = args.article
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 
 }

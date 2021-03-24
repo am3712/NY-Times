@@ -1,6 +1,8 @@
 package com.example.nytimes.data.remote
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 
 
@@ -53,20 +55,24 @@ data class Result(
     @SerializedName("url") val url: String
 )
 
+@Parcelize
 data class Article(
     val url: String,
     val id: Long,
     val source: String,
     val publishedDate: String,
-    val updated: String,
+    val updatedDate: String,
     val section: String,
     val byline: String,
     val title: String,
+    val caption: String,
     val abstract: String,
     val thumbnailUrl: String,
     val coverUrl: String,
+    val coverHeight: Int,
     val type: String,
-)
+) : Parcelable
+
 
 /**
  * Convert Network results to domain model
@@ -74,23 +80,22 @@ data class Article(
 fun PopularResponse.asDomainModel(): List<Article> {
 
     Timber.i("size : ${results.size}")
-    return results.mapIndexed { index: Int, result: Result ->
-        Timber.i("result index : $index")
-        Timber.i("result result.media[$index]: ${result.media[0]}")
-        Timber.i("result media[$index].mediaMetadata[$index].url: ${result.media[0].mediaMetadata[0].url}")
+    return results.map { result: Result ->
         Article(
             id = result.id,
             source = result.source,
             publishedDate = result.publishedDate,
+            updatedDate = result.updated,
             section = result.section,
             byline = result.byline,
             abstract = result.abstract,
             thumbnailUrl = result.media[0].mediaMetadata[0].url,
             coverUrl = result.media[0].mediaMetadata[2].url,
+            coverHeight = result.media[0].mediaMetadata[2].height,
             title = result.title,
             url = result.url,
             type = result.type,
-            updated = result.updated
+            caption = result.media[0].caption
         )
     }
 }

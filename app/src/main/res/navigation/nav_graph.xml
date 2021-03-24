@@ -7,6 +7,19 @@
     <fragment
         android:id="@+id/nav_popular"
         android:name="com.example.nytimes.ui.popular.PopularFragment"
-        android:label="@string/popular_title"
-        tools:layout="@layout/popular_fragment" />
+        android:label="@string/popular_label"
+        tools:layout="@layout/popular_fragment">
+        <action
+            android:id="@+id/action_nav_popular_to_detailsFragment"
+            app:destination="@id/nav_details" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_details"
+        android:name="com.example.nytimes.ui.details.DetailsFragment"
+        android:label="@string/details_label"
+        tools:layout="@layout/details_fragment">
+        <argument
+            android:name="article"
+            app:argType="com.example.nytimes.data.remote.Article" />
+    </fragment>
 </navigation>

@@ -8,8 +8,15 @@
     <string name="action_settings">Settings</string>
 
     <string name="most_popular">Most Popular</string>
-    <string name="popular_title">NY Times Most Popular</string>
+    <string name="popular_label">NY Times Most Popular</string>
     <string name="article_item">Article item</string>
     <string name="article_image_preview">Article Image preview</string>
     <string name="article_image_cover">Article Image Cover</string>
+    <string name="open_in_ny_times">open in ny times</string>
+    <string name="details_label">Details</string>
+
+
+    <string name="date">Published: %s\nUpdated: %s</string>
+
+
 </resources>
