@@ -4,7 +4,7 @@
         app:icon="@drawable/ic_baseline_manage_search_24">
 
         <ListPreference
-            app:defaultValue="1"
+            app:defaultValue="1.json"
             app:entries="@array/period_entries"
             app:entryValues="@array/period_values"
             app:key="period"

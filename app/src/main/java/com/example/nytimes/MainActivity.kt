@@ -18,6 +18,7 @@ import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
+    private val settingsUnavailable = arrayOf(R.id.nav_settings, R.id.nav_details)
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
     private lateinit var toolbar: Toolbar
@@ -42,13 +43,12 @@ class MainActivity : AppCompatActivity() {
 
         navView.setupWithNavController(navController)
 
-        handleNavigation()
-
         //setupWithNavController(navController, appBarConfiguration)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
+        Timber.i("onCreateOptionsMenu menuInflater.inflate(R.menu.main, menu)")
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
@@ -57,7 +57,6 @@ class MainActivity : AppCompatActivity() {
         // Handle item selection
         return when (item.itemId) {
             R.id.action_settings -> {
-                Timber.i("Settings clicked!!")
                 navController.navigate(PopularFragmentDirections.actionNavPopularToNavSettings())
                 true
             }
@@ -65,23 +64,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
-
-    private fun handleNavigation() {
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-
-            Timber.i("handleNavigation called")
-            val item = toolbar.menu.findItem(R.id.action_settings)
-
-            if (destination.id == R.id.nav_settings || destination.id == R.id.nav_details && item.isVisible) {
-                item.isVisible = false
-                Timber.i("action_settings should hidden")
-            } else if (item != null && !item.isVisible) {
-                toolbar.menu.findItem(R.id.action_settings).isVisible = true
-                Timber.i("action_settings should appear")
-            }
-        }
+    override fun onResume() {
+        super.onResume()
+        //handleNavigation()
     }
 
     override fun onSupportNavigateUp(): Boolean {

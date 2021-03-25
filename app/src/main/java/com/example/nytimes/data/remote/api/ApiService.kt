@@ -10,9 +10,9 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("${Constant.MOST_POPULAR_VIEWED}{days}.json")
+    @GET("${Constant.MOST_POPULAR_VIEWED}{days}")
     suspend fun fetchMostPopularDate(
-        @Path("days") days: Int = 1,
+        @Path("days") days: String,
         @Query("api-key") key: String = API_KEY,
     ): PopularResponse
 }

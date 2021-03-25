@@ -2,7 +2,7 @@ package com.example.nytimes
 
 import android.view.View
 import android.widget.ImageView
-import androidx.core.net.toUri
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -21,17 +21,14 @@ fun bindRecyclerView(recyclerView: RecyclerView, data: List<Article>?) {
  */
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
-    imgUrl?.let {
-        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
-        Glide.with(imgView.context)
-            .load(imgUri)
-            .apply(
-                RequestOptions()
-                    .placeholder(R.drawable.loading_animation)
-                    .error(R.drawable.ic_broken_image)
-            )
-            .into(imgView)
-    }
+    Glide.with(imgView.context)
+        .load(imgUrl)
+        .apply(
+            RequestOptions()
+                .placeholder(R.drawable.loading_animation)
+                .error(R.drawable.ic_broken_image)
+        )
+        .into(imgView)
 }
 
 
@@ -42,4 +39,12 @@ fun setGone(view: ImageView, error: String?) {
     else {
         view.visibility = View.VISIBLE
     }
+}
+
+@BindingAdapter("byLine")
+fun setByLineOrGone(view: TextView, byLine: String?) {
+    if (byLine.isNullOrEmpty())
+        view.visibility = View.GONE
+    else
+        view.text = byLine
 }
