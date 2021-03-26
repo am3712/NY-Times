@@ -31,16 +31,6 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
         .into(imgView)
 }
 
-
-@BindingAdapter("goneStatus")
-fun setGone(view: ImageView, error: String?) {
-    if (error == null || error == "OK")
-        view.visibility = View.GONE
-    else {
-        view.visibility = View.VISIBLE
-    }
-}
-
 @BindingAdapter("byLine")
 fun setByLineOrGone(view: TextView, byLine: String?) {
     if (byLine.isNullOrEmpty())

@@ -47,10 +47,18 @@ class PopularFragment : Fragment() {
     private fun setupObserver() {
         //observe no internet Connection or any error
         viewModel.error.observe(viewLifecycleOwner, {
-            if (it != "OK") {
-                Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT)
-                    .show()
-                viewModel.clearErrorStatus();
+            if (it != "CLEAR") {
+                //error
+                if (it != "OK") {
+                    Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT)
+                        .show()
+                    if (viewModel.articles.value.isNullOrEmpty())
+                        binding.connectionError.visibility = View.VISIBLE
+                    viewModel.clearErrorStatus()
+                }
+                // results retrieved
+                else
+                    binding.connectionError.visibility = View.GONE
             }
         })
     }
