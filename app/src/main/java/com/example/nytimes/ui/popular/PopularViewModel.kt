@@ -1,16 +1,15 @@
 package com.example.nytimes.ui.popular
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import androidx.preference.PreferenceManager
+import android.content.SharedPreferences
+import androidx.lifecycle.*
+import com.example.nytimes.data.INYTimesRepository
 import com.example.nytimes.data.NYTimesRepository
+import com.example.nytimes.data.remote.Article
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
-class PopularViewModel(private val app: Application) : AndroidViewModel(app) {
+class PopularViewModel(
+    private val nyTimesRepository: INYTimesRepository
+) : ViewModel() {
 
     // The internal MutableLiveData that stores the status of the most recent request
     private val _loading = MutableLiveData<Boolean>()
@@ -19,9 +18,14 @@ class PopularViewModel(private val app: Application) : AndroidViewModel(app) {
     val loading: LiveData<Boolean>
         get() = _loading
 
-    private val repository = NYTimesRepository()
 
-    val articles = repository.articles
+    // Internally, we use a MutableLiveData, because we will be updating the List of Articles
+    // with new values
+    private val _articles = MutableLiveData<List<Article>>()
+
+    // The external LiveData interface to the property is immutable, so only this class can modify
+    val articles: LiveData<List<Article>>
+        get() = _articles
 
     // The internal MutableLiveData that stores the error string message of the most recent request
     private val _error = MutableLiveData<String>()
@@ -30,15 +34,7 @@ class PopularViewModel(private val app: Application) : AndroidViewModel(app) {
     val error: LiveData<String>
         get() = _error
 
-
-    var searchPeriod: String?
-
     init {
-        Timber.i("PopularViewModel created")
-        val sharedPreferences =
-            PreferenceManager.getDefaultSharedPreferences(app.applicationContext)
-        searchPeriod = sharedPreferences.getString("period", "1.json")
-        Timber.i("searchPeriod : $searchPeriod")
         getPopularArticles()
     }
 
@@ -46,7 +42,7 @@ class PopularViewModel(private val app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             _loading.value = true
             try {
-                repository.getPopularArticles(days = searchPeriod!!)
+                _articles.value = nyTimesRepository.getPopularArticles()
                 _error.value = "OK"
             } catch (e: Exception) {
                 _error.value = e.message
@@ -58,5 +54,13 @@ class PopularViewModel(private val app: Application) : AndroidViewModel(app) {
 
     fun clearErrorStatus() {
         _error.value = "CLEAR"
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    class TasksViewModelFactory(
+        private val nyTimesRepository: INYTimesRepository
+    ) : ViewModelProvider.NewInstanceFactory() {
+        override fun <T : ViewModel> create(modelClass: Class<T>) =
+            (PopularViewModel(nyTimesRepository = nyTimesRepository) as T)
     }
 }

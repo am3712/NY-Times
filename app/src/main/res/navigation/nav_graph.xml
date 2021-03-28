@@ -14,12 +14,12 @@
             app:destination="@id/nav_details"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popEnterAnim="@anim/slide_in_left" />
         <action
             android:id="@+id/action_nav_popular_to_nav_settings"
             app:destination="@id/nav_settings"
-            app:popUpTo="@id/nav_popular"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment

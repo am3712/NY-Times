@@ -7,12 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.nytimes.NYTimesApplication
 import com.example.nytimes.data.remote.Article
 import com.example.nytimes.databinding.PopularFragmentBinding
 import com.google.android.material.snackbar.Snackbar
 
 class PopularFragment : Fragment() {
-    private val viewModel: PopularViewModel by viewModels()
+    private val viewModel: PopularViewModel by viewModels() {
+        PopularViewModel.TasksViewModelFactory(
+            (requireActivity().applicationContext as NYTimesApplication).repository
+        )
+    }
 
     private var _binding: PopularFragmentBinding? = null
     private val binding get() = _binding!!
@@ -37,8 +42,8 @@ class PopularFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         setupObserver()
@@ -67,5 +72,6 @@ class PopularFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 
 }

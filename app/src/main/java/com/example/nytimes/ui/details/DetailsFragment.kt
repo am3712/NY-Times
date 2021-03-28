@@ -37,15 +37,13 @@ class DetailsFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         if (viewModel.article.value == null) {
             viewModel.setArticle(args.article)
         }
-
-        binding.button.setOnClickListener { openWebPage(viewModel.article.value?.url!!) }
     }
 
     override fun onDestroyView() {
@@ -53,13 +51,7 @@ class DetailsFragment : Fragment() {
         _binding = null
     }
 
-    private fun openWebPage(url: String) {
-        val webpage: Uri = Uri.parse(url)
-        val intent = Intent(Intent.ACTION_VIEW, webpage)
-        if (intent.resolveActivity(requireActivity().packageManager) != null) {
-            startActivity(intent)
-        }
-    }
+
 
 
 }
