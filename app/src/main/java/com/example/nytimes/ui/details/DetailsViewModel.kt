@@ -18,7 +18,7 @@ class DetailsViewModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     fun openWebPage() {
-        val webPage: Uri = Uri.parse(article.value?.url!!)
+        val webPage: Uri = Uri.parse(article.value?.url)
         val intent = Intent(Intent.ACTION_VIEW, webPage)
         intent.flags = FLAG_ACTIVITY_NEW_TASK
         if (intent.resolveActivity(app.packageManager) != null) {

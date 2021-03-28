@@ -1,6 +1,14 @@
 package com.example.nytimes.ui.popular
 
+import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.example.nytimes.R
@@ -10,10 +18,11 @@ import com.example.nytimes.data.INYTimesRepository
 import com.example.nytimes.data.remote.Article
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.hamcrest.MatcherAssert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito
+import org.mockito.Mockito.mock
 
 
 @ExperimentalCoroutinesApi
@@ -57,12 +66,29 @@ class PopularFragmentTest {
     }
 
     @Test
-    fun givenTwoArticles_DisplayedInUi() = runBlockingTest {
-        // GIVEN - repository with two articles
-        // WHEN - Details fragment launched
-        //THEN - display 2 article
-        launchFragmentInContainer<PopularFragment>(null, R.style.Theme_NYTimes)
-        Thread.sleep(4000)
+    fun clickArticle_navigateToDetailFragmentOne() = runBlockingTest {
+        // GIVEN - On the home screen
+        val scenario = launchFragmentInContainer<PopularFragment>(Bundle(), R.style.Theme_NYTimes)
+
+        val navController = mock(NavController::class.java)
+
+        scenario.onFragment {
+            Navigation.setViewNavController(it.view!!, navController)
+        }
+
+        // First scroll to the position that needs to be matched and click on it.
+        onView(withId(R.id.articlesList))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    1,
+                    ViewActions.click()
+                )
+            )
+
+        // THEN - Verify that we navigate the first detail screen
+        Mockito.verify(navController).navigate(
+            PopularFragmentDirections.actionNavPopularToDetailsFragment(article2)
+        )
     }
 
 }

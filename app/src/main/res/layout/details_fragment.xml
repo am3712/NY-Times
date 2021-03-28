@@ -29,7 +29,7 @@
                 android:layout_marginHorizontal="8dp">
 
                 <TextView
-                    android:id="@+id/title"
+                    android:id="@+id/title_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lobster"
@@ -61,7 +61,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/title"
+                    app:layout_constraintTop_toBottomOf="@+id/title_text"
                     tools:text="Ten people were killed in the attack at a supermarket in Boulder, including a police officer, the authorities said." />
 
                 <View
@@ -101,7 +101,7 @@
                     android:paddingHorizontal="8dp"
                     android:text="@{viewModel.article.caption}"
                     android:textSize="14sp"
-                    app:layout_constraintBottom_toTopOf="@+id/byLine"
+                    app:layout_constraintBottom_toTopOf="@+id/by_line"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -109,7 +109,7 @@
                     tools:text="People leave flowers on Tuesday at a memorial for the victims of the mass shooting at King Soopers in Boulder, Colo." />
 
                 <TextView
-                    android:id="@+id/byLine"
+                    android:id="@+id/by_line"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -137,22 +137,22 @@
                     android:textSize="13sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/byLine"
+                    app:layout_constraintTop_toBottomOf="@+id/by_line"
                     tools:text="Published March 23, 2021\nUpdated: March 24, 2021, 6:58 a.m
 " />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/button"
+            android:id="@+id/open_web_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="16dp"
-            android:onClick="@{()->viewModel.openWebPage()}"
             android:layout_marginBottom="16dp"
             android:contentDescription="@string/open_in_ny_times"
+            android:onClick="@{()->viewModel.openWebPage()}"
             app:backgroundTint="@color/purple_500"
             app:srcCompat="@drawable/ic_baseline_public_24"
             app:tint="@color/teal_700" />

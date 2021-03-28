@@ -5,8 +5,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.nytimes.data.FakeTestNYTimesRepository
 import com.example.nytimes.data.remote.Article
 import com.example.nytimes.getOrAwaitValue
-import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
+import org.hamcrest.Matchers.`is`
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -73,8 +73,7 @@ class PopularViewModelTest {
 
         // Then the articles live data triggered and equals
         MatcherAssert.assertThat(
-            popularViewModel.articles.getOrAwaitValue(),
-            CoreMatchers.`is`(fakeArticles)
+            popularViewModel.articles.getOrAwaitValue(), `is`(fakeArticles)
         )
     }
 }
