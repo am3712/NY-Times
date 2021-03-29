@@ -40,6 +40,8 @@ app packages :
 * using serviceLocator pattern to provide only one instance of repository and can inject fragment and provide fake repo while testing fragments
 * using dependency injection make code more testable, maintainable and clean code
 
+# How to run:
+
 This project uses the Gradle build system. You don't need an IDE to build and execute it but Android Studio is recommended.
 
 1. Download the project code, preferably using `git clone`.
