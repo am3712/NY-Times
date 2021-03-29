@@ -7,14 +7,16 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.example.nytimes.R
 import com.example.nytimes.ServiceLocator
-import com.example.nytimes.data.FakeAndroidTestNYTimesRepository
-import com.example.nytimes.data.INYTimesRepository
+import com.example.nytimes.data.FakeAndroidTestRepository
 import com.example.nytimes.data.remote.Article
 import org.junit.Before
 import org.junit.Test
@@ -26,7 +28,7 @@ import org.mockito.Mockito.mock
 @MediumTest
 class PopularFragmentTest {
 
-    private lateinit var repository: INYTimesRepository
+    private lateinit var repository: FakeAndroidTestRepository
 
 
     private val article1 = Article(
@@ -57,7 +59,7 @@ class PopularFragmentTest {
 
     @Before
     fun initRepository() {
-        repository = FakeAndroidTestNYTimesRepository(listOf(article1, article2))
+        repository = FakeAndroidTestRepository(listOf(article1, article2))
         ServiceLocator.nyTimesRepository = repository
     }
 
@@ -85,6 +87,20 @@ class PopularFragmentTest {
         Mockito.verify(navController).navigate(
             PopularFragmentDirections.actionNavPopularToDetailsFragment(article2)
         )
+    }
+
+    @Test
+    fun loadApiDataWithError_showSnackBarWithErrorMessage() {
+        //GIVEN - set repo to return Result.Error
+        repository.setReturnError(true)
+
+        // WHEN - On the home screen launch
+        launchFragmentInContainer<PopularFragment>(Bundle(), R.style.Theme_NYTimes)
+
+        // THEN - Verify that snackBar appears
+        onView(withText("Article exception")).check(matches(ViewMatchers.isDisplayed()))
+
+        Thread.sleep(3000)
     }
 
 }
