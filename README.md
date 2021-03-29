@@ -33,12 +33,12 @@ app packages :
 
 * we use nav graph with start destination (Popular fragment) which load api data and load it into recyclerView that implement ListAdapter with DiffUtil
 * if there is unexpected behavior no network or fail to get api data -->> show snackBar with error message
-* on list item clicked navigate to details fragment 
+* on list item clicked navigate to details fragment that show (title, abstract, article image, caption, byline, published & updated date)
 * on details fragment there is fab button to open the full article in web browser
 * on home screen you can change api index from setting app bar menu overflow and click settings to navigate to settings fragment which is PreferenceScreen with ListPreference and user can change period and return back and you see that data updated
-
 * by using liveData and viewModel we survive configuration changes and more and more
 * using serviceLocator pattern to provide only one instance of repository and can inject fragment and provide fake repo while testing fragments
+* using dependency injection make code more testable, maintainable and clean code
 
 This project uses the Gradle build system. You don't need an IDE to build and execute it but Android Studio is recommended.
 
