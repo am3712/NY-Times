@@ -8,7 +8,6 @@
 
 
     <queries>
-        <!-- Place inside the <queries> element. -->
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <data

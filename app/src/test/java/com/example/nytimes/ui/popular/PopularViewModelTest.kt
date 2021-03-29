@@ -1,5 +1,6 @@
 package com.example.nytimes.ui.popular
 
+import android.os.Build
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.nytimes.MainCoroutineRule
@@ -7,7 +8,6 @@ import com.example.nytimes.data.FakeTestRepository
 import com.example.nytimes.data.remote.Article
 import com.example.nytimes.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.hamcrest.MatcherAssert
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.not
@@ -19,7 +19,7 @@ import org.robolectric.annotation.Config
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
-@Config(manifest=Config.NONE)
+@Config(sdk = [Build.VERSION_CODES.O_MR1])
 class PopularViewModelTest {
 
     // Executes each task synchronously using Architecture Components.
@@ -84,7 +84,7 @@ class PopularViewModelTest {
         popularViewModel.getPopularArticles()
 
         // Then the articles live data triggered and equals
-        MatcherAssert.assertThat(popularViewModel.articles.getOrAwaitValue(), `is`(fakeArticles))
+        assertThat(popularViewModel.articles.getOrAwaitValue(), `is`(fakeArticles))
     }
 
 

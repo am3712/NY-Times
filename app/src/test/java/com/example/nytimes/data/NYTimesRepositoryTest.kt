@@ -62,6 +62,8 @@ class NYTimesRepositoryTest {
         val articles = fakeArticlesRepository.getPopularArticles()
 
         // Then tasks are loaded from the remote data source
-        assertEquals(articles, popularResponse.asDomainModel())
+        assertEquals(
+            (articles as Result.Success).data, popularResponse.asDomainModel()
+        )
     }
 }
