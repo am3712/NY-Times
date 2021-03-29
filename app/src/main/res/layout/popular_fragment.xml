@@ -23,7 +23,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             app:onRefreshListener="@{() -> viewModel.getPopularArticles()}"
-            app:refreshing="@{viewModel.loading}">
+            app:refreshing="@{viewModel.dataLoading}">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/articlesList"

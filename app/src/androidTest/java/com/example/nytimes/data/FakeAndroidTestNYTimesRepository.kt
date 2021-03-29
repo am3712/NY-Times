@@ -4,7 +4,7 @@ import com.example.nytimes.data.remote.Article
 
 class FakeAndroidTestNYTimesRepository(private val articles: List<Article>) : INYTimesRepository {
 
-    override suspend fun getPopularArticles(): List<Article> {
-        return articles
+    override suspend fun getPopularArticles(): Result<List<Article>> {
+        return Result.Success(articles)
     }
 }

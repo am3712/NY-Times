@@ -17,7 +17,6 @@ import com.example.nytimes.MainActivity
 import com.example.nytimes.R
 import com.example.nytimes.data.remote.Article
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers.allOf
 import org.junit.Before
 import org.junit.Rule
@@ -83,7 +82,7 @@ class DetailsFragmentTest {
 
 
     @Test
-    fun clickOpenInBrowserButton_sendAndroidIntent() = runBlockingTest {
+    fun clickOpenInBrowserButton_sendAndroidIntent() {
         // GIVEN - Details fragment launched to display Article
         val fragmentArgs = DetailsFragmentArgs(fakeArticle).toBundle()
         launchFragmentInContainer<DetailsFragment>(fragmentArgs, R.style.Theme_NYTimes)

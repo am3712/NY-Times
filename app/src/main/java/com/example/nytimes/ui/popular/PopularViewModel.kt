@@ -1,22 +1,19 @@
 package com.example.nytimes.ui.popular
 
-import android.content.SharedPreferences
 import androidx.lifecycle.*
 import com.example.nytimes.data.INYTimesRepository
-import com.example.nytimes.data.NYTimesRepository
+import com.example.nytimes.data.Result
 import com.example.nytimes.data.remote.Article
 import kotlinx.coroutines.launch
 
-class PopularViewModel(
-    private val nyTimesRepository: INYTimesRepository
-) : ViewModel() {
+class PopularViewModel(private val nyTimesRepository: INYTimesRepository) : ViewModel() {
 
     // The internal MutableLiveData that stores the status of the most recent request
-    private val _loading = MutableLiveData<Boolean>()
+    private val _dataLoading = MutableLiveData<Boolean>()
 
     // The external immutable LiveData for the request status
-    val loading: LiveData<Boolean>
-        get() = _loading
+    val dataLoading: LiveData<Boolean>
+        get() = _dataLoading
 
 
     // Internally, we use a MutableLiveData, because we will be updating the List of Articles
@@ -39,16 +36,16 @@ class PopularViewModel(
     }
 
     fun getPopularArticles() {
+        _dataLoading.value = true
         viewModelScope.launch {
-            _loading.value = true
-            try {
-                _articles.value = nyTimesRepository.getPopularArticles()
+            val result = nyTimesRepository.getPopularArticles()
+            if (result is Result.Success) {
+                _articles.value = result.data!!
                 _error.value = "OK"
-            } catch (e: Exception) {
-                _error.value = e.message
-            } finally {
-                _loading.value = false
+            } else {
+                _error.value = (result as Result.Error).exception.message
             }
+            _dataLoading.value = false
         }
     }
 

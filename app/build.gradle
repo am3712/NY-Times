@@ -45,6 +45,11 @@ android {
         exclude 'META-INF/AL2.0'
         exclude 'META-INF/LGPL2.1'
     }
+
+    testOptions.unitTests {
+        includeAndroidResources = true
+        returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -84,6 +89,9 @@ dependencies {
     //Settings
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
+    //Idling Resource
+    implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
+
 
     // Dependencies for local unit tests
     testImplementation "junit:junit:$junitVersion"
@@ -106,11 +114,13 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
     androidTestImplementation "androidx.test:runner:$runnerVersion"
     androidTestImplementation "androidx.test:rules:$runnerVersion"
+    debugImplementation "androidx.fragment:fragment-testing:$fragmentVersion"
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
 
     // Dependencies for Android instrumented unit tests
     androidTestImplementation "junit:junit:$junitVersion"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
-    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
+
     implementation "androidx.test:core:$androidXTestCoreVersion"
 }

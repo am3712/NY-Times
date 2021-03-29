@@ -16,16 +16,12 @@ import com.example.nytimes.ServiceLocator
 import com.example.nytimes.data.FakeAndroidTestNYTimesRepository
 import com.example.nytimes.data.INYTimesRepository
 import com.example.nytimes.data.remote.Article
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
 
-
-@ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 @MediumTest
 class PopularFragmentTest {
@@ -66,7 +62,7 @@ class PopularFragmentTest {
     }
 
     @Test
-    fun clickArticle_navigateToDetailFragmentOne() = runBlockingTest {
+    fun clickArticle_navigateToDetailFragmentOne() {
         // GIVEN - On the home screen
         val scenario = launchFragmentInContainer<PopularFragment>(Bundle(), R.style.Theme_NYTimes)
 
