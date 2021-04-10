@@ -18,8 +18,7 @@
         <action
             android:id="@+id/action_nav_popular_to_nav_settings"
             app:destination="@id/nav_settings"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/nav_graph"
+            app:popUpTo="@id/nav_popular"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
