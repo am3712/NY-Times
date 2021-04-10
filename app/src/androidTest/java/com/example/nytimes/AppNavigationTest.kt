@@ -154,7 +154,7 @@ class AppNavigationTest {
             )
 
         // Confirm that if we click back once, we end up back at the home screen
-        pressBack()
+//        pressBack()
 
         onView(withId(R.id.articlesList)).check(matches(isDisplayed()))
 

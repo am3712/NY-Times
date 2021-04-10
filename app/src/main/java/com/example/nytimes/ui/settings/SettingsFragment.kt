@@ -24,7 +24,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             true // default to enabled
         ) {
             override fun handleOnBackPressed() {
-                NavHostFragment.findNavController(this@SettingsFragment).navigateUp();
+                NavHostFragment.findNavController(this@SettingsFragment).navigateUp()
             }
         }
 
